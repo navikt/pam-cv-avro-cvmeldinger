@@ -1,0 +1,17 @@
+@namespace("no.nav.arbeid.cv")
+protocol CvProtocol {
+  record SlettCv {
+    string aktoerId;
+    timestamp_ms tidspunkt;     
+  }
+
+  record OpprettCv {
+    string aktoerId;
+    timestamp_ms tidspunkt;
+  }
+
+  record Melding {
+    union { SlettCv, OpprettCv } melding;
+  }
+}
+

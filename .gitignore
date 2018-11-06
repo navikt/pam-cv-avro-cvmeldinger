@@ -21,3 +21,26 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+.classpath
+.project
+.settings
+.externalToolBuilders
+*.py[co]
+*.*~
+*\#
+*.db
+*_old
+*.pybundle
+*.sublime-workspace
+/venv/
+/api/_static/
+target
+.idea/
+*.iml
+reports/
+node_modules/
+repo_test_dir
+**/webapp/static/bundle.js
+war/src/main/client/build
+
