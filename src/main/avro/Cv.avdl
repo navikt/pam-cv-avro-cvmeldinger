@@ -39,7 +39,7 @@ protocol CvProtocol {
     string utsteder;
     date fra_tidspunkt;
     union {date, null} til_tidspunkt;
-    union {date, null} utloeper;
+    union {date, null} utloeper; // TODO kandidat for å fjernes
   }
 
   record AnnenErfaring {
@@ -51,17 +51,18 @@ protocol CvProtocol {
   record FoererkortKlasse {
     string klasse;
     date fra_tidspunkt;
-    date utloeper;
+    union {date, null} utloeper; // TODO kandidat for å fjernes
   }
   record Foererkort {
     array<FoererkortKlasse> klasse;
   }
 
   record Cv {
-    string aktoerId;
+    string cv_id;
+    string aktoer_id;
     timestamp_ms sist_endret;
 
-    string fodselsnummer;               // Nødvendig for datavarehus?
+    string fodselsnummer;               // Nødvendig for datavarehus? Mulig vi dropper fødselsnummer og kun bruker aktør_id
     string fornavn;                     // Nødvendig for datavarehus?
     string etternavn;                   // Nødvendig for datavarehus?
     union {string, null} epost;         // Nødvendig for datavarehus?
@@ -81,30 +82,36 @@ protocol CvProtocol {
   }
 
   record OpprettCv {
-    string aktoerId;
-    timestamp_ms sist_endret;
-
     Cv cv;
   }
   record EndreCv {
-    string aktoerId;
-    timestamp_ms sist_endret;
-
     Cv cv;
   }
+
   record SlettCv {
-    string aktoerId;
-    timestamp_ms sist_endret;
+    string cv_id;
+  }
+
+  enum Meldingstype {
+    OPPRETT,
+    ENDRE,
+    SLETT
   }
 
   // TODO Samtykke/Hjemmel
   // TODO jobbønsker/jobbprofil
+  // TODO personkode? (kode 7?), flagg for relasjonsstatus til NAV (om personen er under oppfølging eller ei)?
+
+  /** Kun ett av feltene opprett, endre eller slett cv vil ha verdi.
+      Dette er basert på meldingstype */
   record Melding {
-    // NB: En union konverteres til java.lang.Object uten noen typeangivelse.
-    //     Det er sannsynlig at vi skriver om dette til å inneholde
-    //     et felt pr meldingstype, samt en enum som sier hvilken melding det faktisk er.
-    //     Dette blir nesten på samme måte som man pleier å gjøre det i C
-    union { SlettCv, OpprettCv, EndreCv } melding;
+    Meldingstype meldingstype;
+    union {OpprettCv, null} opprett_cv;
+    union {EndreCv, null} endre_cv;
+    union {SlettCv, null} slett_cv;
+
+    string aktoer_id;
+    timestamp_ms sist_endret;
   }
 }
 
