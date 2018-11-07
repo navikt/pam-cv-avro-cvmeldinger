@@ -48,10 +48,13 @@ protocol CvProtocol {
     union {date, null} til_tidspunkt;
   }
 
-  record Foererkort {
+  record FoererkortKlasse {
     string klasse;
     date fra_tidspunkt;
     date utloeper;
+  }
+  record Foererkort {
+    array<FoererkortKlasse> klasse;
   }
 
   record Cv {
@@ -69,12 +72,12 @@ protocol CvProtocol {
     union {string, null} land;
     union {string, null} nasjonalitet;
     boolean disponerer_bil;
+    union {Foererkort, null} foererkort;
 
     array<Arbeidserfaring> arbeidserfaring;
     array<Utdannelse> utdannelse;
     array<Kurs> kurs;
     array<AnnenErfaring> annen_erfaring;
-    array<Foererkort> foererkort;
   }
 
   record OpprettCv {
