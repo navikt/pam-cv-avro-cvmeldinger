@@ -61,6 +61,7 @@ protocol CvProtocol {
     string cv_id;
     string aktoer_id;
     timestamp_ms sist_endret;
+    timestamp_ms opprettet;
 
     string fodselsnummer;               // Nødvendig for datavarehus? Mulig vi dropper fødselsnummer og kun bruker aktør_id
     string fornavn;                     // Nødvendig for datavarehus?
