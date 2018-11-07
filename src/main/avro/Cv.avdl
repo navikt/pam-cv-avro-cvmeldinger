@@ -1,17 +1,107 @@
 @namespace("no.nav.arbeid.cv")
 protocol CvProtocol {
-  record SlettCv {
+  enum Ferdighetsnivaa {
+    IKKE_OPPGITT,
+    NYBEGYNNER,
+    GODT,
+    VELDIG_GODT,
+    FOERSTESPRAAK
+  }
+
+  record Spraakferdighet {
+    string spraaknavn;
+    union {string, null} iso3kode; // Det er ikke sikkert det fins ISO-koder for språket. Det er ikke sikkert språket egentlig eksisterer i hele tatt..
+    Ferdighetsnivaa muntlig;
+    Ferdighetsnivaa skriftlig;
+  }
+
+  record Arbeidserfaring {
+    string stillingstittel;
+    union {string, null} styrkkode;
+    union {string, null} janzz_konseptid;
+    union {string, null} arbeidsgiver;
+    date fra_tidspunkt;
+    union {date, null} til_tidspunkt;
+    // TODO: Hva med sted? Er det noe vi vil ha med etterhvert?? Fins ikke i Arena.
+    // TODO: vi må vel ha en eller annen beskrivelse også her?
+  }
+
+  record Utdannelse {
+    string nuskode_grad; // Uvisst hvor mange siffer, sannsynligvis kun det første sifferet i NUS
+    string laerested;
+    string beskrivelse;
+    date fra_tidspunkt;
+    union {date, null} til_tidspunkt;
+  }
+
+  record Kurs {
+    string tittel;
+    string utsteder;
+    date fra_tidspunkt;
+    union {date, null} til_tidspunkt;
+    union {date, null} utloeper;
+  }
+
+  record AnnenErfaring {
+    string beskrivelse;
+    date fra_tidspunkt;
+    union {date, null} til_tidspunkt;
+  }
+
+  record Foererkort {
+    string klasse;
+    date fra_tidspunkt;
+    date utloeper;
+  }
+
+  record Cv {
     string aktoerId;
-    timestamp_ms tidspunkt;     
+    timestamp_ms sist_endret;
+
+    string fodselsnummer;               // Nødvendig for datavarehus?
+    string fornavn;                     // Nødvendig for datavarehus?
+    string etternavn;                   // Nødvendig for datavarehus?
+    union {string, null} epost;         // Nødvendig for datavarehus?
+    union {string, null} telefon;       // Nødvendig for datavarehus?
+    union {string, null} gateadresse;   // Nødvendig for datavarehus?
+    union {string, null} postnummer;
+    union {string, null} poststed;      // Nødvendig for datavarehus?
+    union {string, null} land;
+    union {string, null} nasjonalitet;
+    boolean disponerer_bil;
+
+    array<Arbeidserfaring> arbeidserfaring;
+    array<Utdannelse> utdannelse;
+    array<Kurs> kurs;
+    array<AnnenErfaring> annen_erfaring;
+    array<Foererkort> foererkort;
   }
 
   record OpprettCv {
     string aktoerId;
-    timestamp_ms tidspunkt;
+    timestamp_ms sist_endret;
+
+    Cv cv;
+  }
+  record EndreCv {
+    string aktoerId;
+    timestamp_ms sist_endret;
+
+    Cv cv;
+  }
+  record SlettCv {
+    string aktoerId;
+    timestamp_ms sist_endret;
   }
 
+  // TODO Samtykke/Hjemmel
+  // TODO jobbønsker/jobbprofil
   record Melding {
-    union { SlettCv, OpprettCv } melding;
+    // NB: En union konverteres til java.lang.Object uten noen typeangivelse.
+    //     Det er sannsynlig at vi skriver om dette til å inneholde
+    //     et felt pr meldingstype, samt en enum som sier hvilken melding det faktisk er.
+    //     Dette blir nesten på samme måte som man pleier å gjøre det i C
+    union { SlettCv, OpprettCv, EndreCv } melding;
   }
 }
 
