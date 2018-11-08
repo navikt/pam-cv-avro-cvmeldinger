@@ -1,6 +1,7 @@
 @namespace("no.nav.arbeid.cv")
 protocol CvProtocol {
   enum Ferdighetsnivaa {
+    /** Ikke oppgitt eller ikke relevant, f.eks er skriftlig tegnspråk ikke meningsfullt */
     IKKE_OPPGITT,
     NYBEGYNNER,
     GODT,
@@ -26,6 +27,7 @@ protocol CvProtocol {
     // TODO: vi må vel ha en eller annen beskrivelse også her?
   }
 
+  /** Utdannelse inkluderer også svennebrev */
   record Utdannelse {
     string nuskode_grad; // Uvisst hvor mange siffer, sannsynligvis kun det første sifferet i NUS
     string laerested;
@@ -34,14 +36,23 @@ protocol CvProtocol {
     union {date, null} til_tidspunkt;
   }
 
+  /** Kurs er f.eks førstehjelpskurs */
   record Kurs {
     string tittel;
     string utsteder;
     date fra_tidspunkt;
     union {date, null} til_tidspunkt;
+  }
+
+  /** Sertifikater er f.eks truckførerbevis, sveisesertifikat eller offshoresertifikat */
+  record Sertifikat {
+    string tittel;
+    string utsteder;
+    date gjennomfoert;
     union {date, null} utloeper; // TODO kandidat for å fjernes
   }
 
+  /** Verv etc inngår i annen erfaring */
   record AnnenErfaring {
     string beskrivelse;
     date fra_tidspunkt;
@@ -53,9 +64,12 @@ protocol CvProtocol {
     date fra_tidspunkt;
     union {date, null} utloeper; // TODO kandidat for å fjernes
   }
+  /** Førerkort inneholder kun de førerkortklassene du finner bak på førerkortet ditt,
+      truckførerbevis etc inngår i Sertifikat */
   record Foererkort {
     array<FoererkortKlasse> klasse;
   }
+
 
   record Cv {
     string cv_id;
