@@ -1,4 +1,4 @@
-@namespace("no.nav.arbeid.cv")
+@namespace("no.nav.arbeid.cv.avro")
 protocol CvProtocol {
   enum Ferdighetsnivaa {
     /** Ikke oppgitt eller ikke relevant, f.eks er skriftlig tegnspråk ikke meningsfullt */
