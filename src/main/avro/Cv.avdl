@@ -33,7 +33,8 @@ protocol CvProtocol {
     string laerested;
     string beskrivelse;
     date fra_tidspunkt;
-    union {null, date} til_tidspunkt = null;
+    // til_tidspunkt er ms siden epoch 
+    union {null, long} til_tidspunkt = null;
   }
 
   /** Kurs er f.eks førstehjelpskurs */
@@ -41,7 +42,7 @@ protocol CvProtocol {
     string tittel;
     string utsteder;
     date fra_tidspunkt;
-    union {null, date} til_tidspunkt = null;
+    union {null, long} til_tidspunkt = null;
   }
 
   /** Sertifikater er f.eks truckførerbevis, sveisesertifikat eller offshoresertifikat */
@@ -49,20 +50,20 @@ protocol CvProtocol {
     string tittel;
     string utsteder;
     date gjennomfoert;
-    union {null, date} utloeper = null; // TODO kandidat for å fjernes
+    union {null, long} utloeper = null; // TODO kandidat for å fjernes
   }
 
   /** Verv etc inngår i annen erfaring */
   record AnnenErfaring {
     string beskrivelse;
     date fra_tidspunkt;
-    union {null, date} til_tidspunkt = null;
+    union {null, long} til_tidspunkt = null;
   }
 
   record FoererkortKlasse {
     string klasse;
     date fra_tidspunkt;
-    union {null, date} utloeper = null; // TODO kandidat for å fjernes
+    union {null, long} utloeper = null; // TODO kandidat for å fjernes
   }
   /** Førerkort inneholder kun de førerkortklassene du finner bak på førerkortet ditt,
       truckførerbevis etc inngår i Sertifikat */
