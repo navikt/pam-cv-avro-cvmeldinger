@@ -22,7 +22,7 @@ protocol CvProtocol {
     union {null, string} janzz_konseptid = null;
     union {null, string} arbeidsgiver = null;
     date fra_tidspunkt;
-    union {null, date} til_tidspunkt = null;
+    union {null, long} til_tidspunkt = null;
     // TODO: Hva med sted? Er det noe vi vil ha med etterhvert?? Fins ikke i Arena.
     // TODO: vi må vel ha en eller annen beskrivelse også her?
   }
@@ -33,7 +33,7 @@ protocol CvProtocol {
     string laerested;
     string beskrivelse;
     date fra_tidspunkt;
-    // til_tidspunkt er ms siden epoch 
+    // til_tidspunkt er ms siden epoch
     union {null, long} til_tidspunkt = null;
   }
 
