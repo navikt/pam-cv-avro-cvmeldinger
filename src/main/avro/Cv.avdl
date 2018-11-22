@@ -11,18 +11,18 @@ protocol CvProtocol {
 
   record Spraakferdighet {
     string spraaknavn;
-    union {string, null} iso3kode; // Det er ikke sikkert det fins ISO-koder for språket. Det er ikke sikkert språket egentlig eksisterer i hele tatt..
+    union {null, string} iso3kode; // Det er ikke sikkert det fins ISO-koder for språket. Det er ikke sikkert språket egentlig eksisterer i hele tatt..
     Ferdighetsnivaa muntlig;
     Ferdighetsnivaa skriftlig;
   }
 
   record Arbeidserfaring {
     string stillingstittel;
-    union {string, null} styrkkode;
-    union {string, null} janzz_konseptid;
-    union {string, null} arbeidsgiver;
+    union {null, string} styrkkode;
+    union {null, string} janzz_konseptid;
+    union {null, string} arbeidsgiver;
     date fra_tidspunkt;
-    union {date, null} til_tidspunkt;
+    union {null, date} til_tidspunkt;
     // TODO: Hva med sted? Er det noe vi vil ha med etterhvert?? Fins ikke i Arena.
     // TODO: vi må vel ha en eller annen beskrivelse også her?
   }
@@ -33,7 +33,7 @@ protocol CvProtocol {
     string laerested;
     string beskrivelse;
     date fra_tidspunkt;
-    union {date, null} til_tidspunkt;
+    union {null, date} til_tidspunkt;
   }
 
   /** Kurs er f.eks førstehjelpskurs */
@@ -41,7 +41,7 @@ protocol CvProtocol {
     string tittel;
     string utsteder;
     date fra_tidspunkt;
-    union {date, null} til_tidspunkt;
+    union {null, date} til_tidspunkt;
   }
 
   /** Sertifikater er f.eks truckførerbevis, sveisesertifikat eller offshoresertifikat */
@@ -49,20 +49,20 @@ protocol CvProtocol {
     string tittel;
     string utsteder;
     date gjennomfoert;
-    union {date, null} utloeper; // TODO kandidat for å fjernes
+    union {null, date} utloeper; // TODO kandidat for å fjernes
   }
 
   /** Verv etc inngår i annen erfaring */
   record AnnenErfaring {
     string beskrivelse;
     date fra_tidspunkt;
-    union {date, null} til_tidspunkt;
+    union {null, date} til_tidspunkt;
   }
 
   record FoererkortKlasse {
     string klasse;
     date fra_tidspunkt;
-    union {date, null} utloeper; // TODO kandidat for å fjernes
+    union {null, date} utloeper; // TODO kandidat for å fjernes
   }
   /** Førerkort inneholder kun de førerkortklassene du finner bak på førerkortet ditt,
       truckførerbevis etc inngår i Sertifikat */
@@ -80,15 +80,15 @@ protocol CvProtocol {
     string fodselsnummer;               // Nødvendig for datavarehus? Mulig vi dropper fødselsnummer og kun bruker aktør_id
     string fornavn;                     // Nødvendig for datavarehus?
     string etternavn;                   // Nødvendig for datavarehus?
-    union {string, null} epost;         // Nødvendig for datavarehus?
-    union {string, null} telefon;       // Nødvendig for datavarehus?
-    union {string, null} gateadresse;   // Nødvendig for datavarehus?
-    union {string, null} postnummer;
-    union {string, null} poststed;      // Nødvendig for datavarehus?
-    union {string, null} land;
-    union {string, null} nasjonalitet;
+    union {null, string} epost;         // Nødvendig for datavarehus?
+    union {null, string} telefon;       // Nødvendig for datavarehus?
+    union {null, string} gateadresse;   // Nødvendig for datavarehus?
+    union {null, string} postnummer;
+    union {null, string} poststed;      // Nødvendig for datavarehus?
+    union {null, string} land;
+    union {null, string} nasjonalitet;
     boolean disponerer_bil;
-    union {Foererkort, null} foererkort;
+    union {null, Foererkort} foererkort;
 
     array<Arbeidserfaring> arbeidserfaring;
     array<Utdannelse> utdannelse;
@@ -98,8 +98,8 @@ protocol CvProtocol {
   }
 
   record Geografi {
-    union {string, null} sted;
-    union {string, null} kode;
+    union {null, string} sted;
+    union {null, string} kode;
   }
 
   record Jobbprofil {
@@ -154,13 +154,13 @@ protocol CvProtocol {
       Hvis meldingstype f.eks er OPPRETT vil både opprett_jobbprofil og opprett_cv kunne ha verdi */
   record Melding {
     Meldingstype meldingstype;
-    union {OpprettCv, null} opprett_cv;
-    union {EndreCv, null} endre_cv;
-    union {SlettCv, null} slett_cv;
+    union {null, OpprettCv} opprett_cv;
+    union {null, EndreCv} endre_cv;
+    union {null, SlettCv} slett_cv;
 
-    union {OpprettJobbprofil, null} opprett_jobbprofil;
-    union {EndreJobbprofil, null} endre_jobbprofil;
-    union {SlettJobbprofil, null} slett_jobbprofil;
+    union {null, OpprettJobbprofil} opprett_jobbprofil;
+    union {null, EndreJobbprofil} endre_jobbprofil;
+    union {null, SlettJobbprofil} slett_jobbprofil;
 
     string aktoer_id;
     timestamp_ms sist_endret;
