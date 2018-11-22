@@ -94,17 +94,49 @@ protocol CvProtocol {
     array<Utdannelse> utdannelse;
     array<Kurs> kurs;
     array<AnnenErfaring> annen_erfaring;
+    array<Spraakferdighet> spraakferdigheter;
+  }
+
+  record Geografi {
+    union {string, null} sted;
+    union {string, null} kode;
+  }
+
+  record Jobbprofil {
+    string jobbprofil_id;
+    string aktoer_id;
+    timestamp_ms sist_endret;
+    timestamp_ms opprettet;
+
+    boolean aktiv;
+    array<string> stillinger;
+    array<string> kompetanser;
+    array<string> stillingkladder;
+    array<Geografi> geografi;
+    array<string> ansettelsesformer;
+    array<string> arbeidstider;
+    array<string> arbeidsdager;
+    array<string> arbeidstidsordninger;
+    array<string> omfang;
   }
 
   record OpprettCv {
     Cv cv;
   }
+  record OpprettJobbprofil {
+    Jobbprofil jobbprofil;
+  }
   record EndreCv {
     Cv cv;
   }
-
+  record EndreJobbprofil {
+    Jobbprofil jobbprofil;
+  }
   record SlettCv {
     string cv_id;
+  }
+  record SlettJobbprofil {
+    string jobbprofil_id;
   }
 
   enum Meldingstype {
@@ -117,13 +149,18 @@ protocol CvProtocol {
   // TODO jobbønsker/jobbprofil
   // TODO personkode? (kode 7?), flagg for relasjonsstatus til NAV (om personen er under oppfølging eller ei)?
 
-  /** Kun ett av feltene opprett, endre eller slett cv vil ha verdi.
-      Dette er basert på meldingstype */
+  /** Kun ett av feltene opprett, endre eller slett vil ha verdi.
+      Dette er basert på meldingstype.
+      Hvis meldingstype f.eks er OPPRETT vil både opprett_jobbprofil og opprett_cv kunne ha verdi */
   record Melding {
     Meldingstype meldingstype;
     union {OpprettCv, null} opprett_cv;
     union {EndreCv, null} endre_cv;
     union {SlettCv, null} slett_cv;
+
+    union {OpprettJobbprofil, null} opprett_jobbprofil;
+    union {EndreJobbprofil, null} endre_jobbprofil;
+    union {SlettJobbprofil, null} slett_jobbprofil;
 
     string aktoer_id;
     timestamp_ms sist_endret;
