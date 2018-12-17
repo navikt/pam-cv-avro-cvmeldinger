@@ -41,8 +41,8 @@ protocol CvProtocol {
   record Kurs {
     string tittel;
     string utsteder;
-    date fra_tidspunkt;
-    union {null, long} til_tidspunkt = null;
+    union {null, long} tidspunkt = null;
+    union {null, int} varighet = null;
   }
 
   /** Sertifikater er f.eks truckførerbevis, sveisesertifikat eller offshoresertifikat */
