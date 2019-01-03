@@ -101,6 +101,9 @@ protocol CvProtocol {
     union {null, string} land = null;
     union {null, string} nasjonalitet = null;
     boolean disponerer_bil;
+    boolean synlig_for_arbeidsgiver = true;
+    boolean synlig_for_veileder = true;
+
     union {null, Foererkort} foererkort;
 
     array<Arbeidserfaring> arbeidserfaring;
