@@ -87,13 +87,17 @@ protocol CvProtocol {
     timestamp_ms opprettet;
 
     string fodselsnummer;               // Nødvendig for datavarehus? Mulig vi dropper fødselsnummer og kun bruker aktør_id
-    string fornavn;                     // Nødvendig for datavarehus?
-    string etternavn;                   // Nødvendig for datavarehus?
-    union {null, string} epost = null;         // Nødvendig for datavarehus?
-    union {null, string} telefon = null;       // Nødvendig for datavarehus?
-    union {null, string} gateadresse = null;   // Nødvendig for datavarehus?
+    // Fodselsdato burde være av typen timestamp, men siden felt som legges til må kunne være null for at endringen
+    // skal være bakoverkompatible, og at avro foreløpig ikke støtter at syntetiske typer kan være null, blir det
+    // millisekunder siden epoch...
+    union {null, long} foedselsdato = null;
+    string fornavn;
+    string etternavn;
+    union {null, string} epost = null;
+    union {null, string} telefon = null;
+    union {null, string} gateadresse = null;
     union {null, string} postnummer = null;
-    union {null, string} poststed = null;      // Nødvendig for datavarehus?
+    union {null, string} poststed = null;
     union {null, string} land = null;
     union {null, string} nasjonalitet = null;
     boolean disponerer_bil;
