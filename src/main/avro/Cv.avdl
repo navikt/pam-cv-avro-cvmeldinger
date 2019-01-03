@@ -9,6 +9,13 @@ protocol CvProtocol {
     FOERSTESPRAAK
   }
 
+  enum Tidsenhet {
+    TIME,
+    DAG,
+    UKE,
+    MND
+  }
+
   record Spraakferdighet {
     string spraaknavn;
     union {null, string} iso3kode = null; // Det er ikke sikkert det fins ISO-koder for språket. Det er ikke sikkert språket egentlig eksisterer i hele tatt..
@@ -43,6 +50,7 @@ protocol CvProtocol {
     string utsteder;
     union {null, long} tidspunkt = null;
     union {null, int} varighet = null;
+    union {null, Tidsenhet} varighet_enhet = null;
   }
 
   /** Sertifikater er f.eks truckførerbevis, sveisesertifikat eller offshoresertifikat */
@@ -94,6 +102,7 @@ protocol CvProtocol {
     array<Arbeidserfaring> arbeidserfaring;
     array<Utdannelse> utdannelse;
     array<Kurs> kurs;
+    array<Sertifikat> sertifikat;
     array<AnnenErfaring> annen_erfaring;
     array<Spraakferdighet> spraakferdigheter;
   }
