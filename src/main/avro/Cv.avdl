@@ -32,7 +32,6 @@ protocol CvProtocol {
     date fra_tidspunkt;
     union {null, long} til_tidspunkt = null;
     // TODO: Hva med sted? Er det noe vi vil ha med etterhvert?? Fins ikke i Arena.
-    // TODO: vi må vel ha en eller annen beskrivelse også her?
   }
 
   enum UtdannelseYrkestatus {
@@ -159,7 +158,6 @@ protocol CvProtocol {
     array<string> kompetanser;
     array<string> stillingkladder;
     array<Geografi> geografi;
-    // TODO burde vi bruke enum'er på feltene under? Det bør i såfall gjøres før vi versjonerer avrotopicet med breaking changes
     // Typiske verdier for ansettelsesformer er ENGASJEMENT, FAST, FERIEJOBB, PROSJEKT, SELVSTENDIG_NAERINGSDRIVENDE,
     // SESONG, VIKARIAT, TRAINEE, LAERLING eller ANNET
     array<string> ansettelsesformer;
