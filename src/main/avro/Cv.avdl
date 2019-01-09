@@ -32,13 +32,11 @@ protocol CvProtocol {
     date fra_tidspunkt;
     union {null, long} til_tidspunkt = null;
     // TODO: Hva med sted? Er det noe vi vil ha med etterhvert?? Fins ikke i Arena.
-    // TODO: vi må vel ha en eller annen beskrivelse også her?
   }
 
   enum UtdannelseYrkestatus {
     SVENNEBREV_FAGBREV,
     MESTERBREV,
-    AUTORISASJON,
     INGEN
   }
 
@@ -51,6 +49,7 @@ protocol CvProtocol {
     // til_tidspunkt er ms siden epoch
     union {null, long} til_tidspunkt = null;
     union {null, UtdannelseYrkestatus} utdannelse_yrkestatus = null;
+    boolean autorisasjon = false;
   }
 
   /** Kurs er f.eks førstehjelpskurs */
@@ -67,7 +66,7 @@ protocol CvProtocol {
     string tittel;
     string utsteder;
     date gjennomfoert;
-    union {null, long} utloeper = null; // TODO kandidat for å fjernes
+    union {null, long} utloeper = null; // TODO kandidat for å fjernes?
   }
 
   /** Verv etc inngår i annen erfaring */
@@ -89,6 +88,21 @@ protocol CvProtocol {
     array<FoererkortKlasse> klasse;
   }
 
+  record Oppfolgingsinformasjon {
+    string veileder;
+    boolean manuell;
+    string formidlingsgruppe;
+    /** F.eks avklaring, beholde arbeid/skaffe arbeid*/
+    string hovedmaal;
+    /** AKA kvalifiseringsgruppe/innsatsgruppe, f.eks spesielt tilpasse innsats */
+    string servicegruppe;
+    /** Aetat-orgenhet */
+    string oppfolgingskontor;
+    /** AKA IMATC */
+    boolean fritattArbeidsgiversKandidatsok;
+    /** AKA FRKAS */
+    boolean fritattKandidatsok;
+  }
 
   record Cv {
     string cv_id;
@@ -96,11 +110,8 @@ protocol CvProtocol {
     timestamp_ms sist_endret;
     timestamp_ms opprettet;
 
-    string fodselsnummer;               // Nødvendig for datavarehus? Mulig vi dropper fødselsnummer og kun bruker aktør_id
-    // Fodselsdato burde være av typen timestamp, men siden felt som legges til må kunne være null for at endringen
-    // skal være bakoverkompatible, og at avro foreløpig ikke støtter at syntetiske typer kan være null, blir det
-    // millisekunder siden epoch...
-    union {null, long} foedselsdato = null;
+    string fodselsnummer;
+    date foedselsdato;
     string fornavn;
     string etternavn;
     union {null, string} epost = null;
@@ -111,15 +122,22 @@ protocol CvProtocol {
     union {null, string} land = null;
     union {null, string} nasjonalitet = null;
     boolean disponerer_bil;
+
+    // Man kan reservere seg mot at CV skal være synlig for arbeidsgiver hvis man er jobbskifter
+    // informasjonen under det som skal brukes i søk. Eventuelle tilleggsopplysninger i oppfølgingsinformasjon
+    // er kunt ment å være til informasjon for veiledere.
     boolean synlig_for_arbeidsgiver = true;
     boolean synlig_for_veileder = true;
 
     union {null, Foererkort} foererkort;
 
+    // Kun CV'er som er konvertert fra Arena vil ha dette feltet utfyllt
+    union {null, string} arena_kandidatnr = null;
+
     array<Arbeidserfaring> arbeidserfaring;
     array<Utdannelse> utdannelse;
     array<Kurs> kurs;
-    array<Sertifikat> sertifikat = null;
+    array<Sertifikat> sertifikat;
     array<AnnenErfaring> annen_erfaring;
     array<Spraakferdighet> spraakferdigheter;
   }
@@ -140,10 +158,15 @@ protocol CvProtocol {
     array<string> kompetanser;
     array<string> stillingkladder;
     array<Geografi> geografi;
+    // Typiske verdier for ansettelsesformer er ENGASJEMENT, FAST, FERIEJOBB, PROSJEKT, SELVSTENDIG_NAERINGSDRIVENDE,
+    // SESONG, VIKARIAT, TRAINEE, LAERLING eller ANNET
     array<string> ansettelsesformer;
+    // Typiske verdier for arbeidstider er DAGTID, KVELD, NATT
     array<string> arbeidstider;
     array<string> arbeidsdager;
+    // Typiske verdier for arbeidstidsordninger er SKIFT, TURNUS, VAKT
     array<string> arbeidstidsordninger;
+    // Typiske verdier for omfang er HELTID eller DELTID
     array<string> omfang;
   }
 
@@ -172,13 +195,15 @@ protocol CvProtocol {
     SLETT
   }
 
-  // TODO Samtykke/Hjemmel
-  // TODO jobbønsker/jobbprofil
-  // TODO personkode? (kode 7?), flagg for relasjonsstatus til NAV (om personen er under oppfølging eller ei)?
+  // TODO Samtykke/Hjemmel?
+  // Inntill videre er samtykke/hjemmel innbakt i cv.synlig_for_arbeidsgiver og cv.synlig_for_veileder.
 
   /** Kun ett av feltene opprett, endre eller slett vil ha verdi.
       Dette er basert på meldingstype.
-      Hvis meldingstype f.eks er OPPRETT vil både opprett_jobbprofil og opprett_cv kunne ha verdi */
+      Hvis meldingstype f.eks er OPPRETT vil både opprett_jobbprofil og opprett_cv kunne ha verdi
+      Det vil alltid være en cv med her, men ikke alltid en jobbprofil.
+      Hvis aktøren er under oppfølging vil det alltid følge med oppfølgingsinformasjon
+   */
   record Melding {
     Meldingstype meldingstype;
     union {null, OpprettCv} opprett_cv = null;
@@ -188,6 +213,9 @@ protocol CvProtocol {
     union {null, OpprettJobbprofil} opprett_jobbprofil = null;
     union {null, EndreJobbprofil} endre_jobbprofil = null;
     union {null, SlettJobbprofil} slett_jobbprofil = null;
+
+    // Kun de som er under oppfølging har oppfolgingsinformasjon
+    union {null, Oppfolgingsinformasjon} oppfolgingsinformasjon = null;
 
     string aktoer_id;
     timestamp_ms sist_endret;
