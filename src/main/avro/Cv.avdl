@@ -122,6 +122,7 @@ protocol CvProtocol {
     union {null, string} land = null;
     union {null, string} nasjonalitet = null;
     boolean disponerer_bil;
+    string sammendrag = "";
 
     // Man kan reservere seg mot at CV skal være synlig for arbeidsgiver hvis man er jobbskifter
     // informasjonen under det som skal brukes i søk. Eventuelle tilleggsopplysninger i oppfølgingsinformasjon
