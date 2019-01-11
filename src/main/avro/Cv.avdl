@@ -25,13 +25,17 @@ protocol CvProtocol {
 
   record Arbeidserfaring {
     string stillingstittel;
+    string stillingstittel_fritekst = "";
     union {null, string} styrkkode = null;
     union {null, string} janzz_konseptid = null;
     union {null, string} janzz_preferred_term = null;
     union {null, string} arbeidsgiver = null;
     date fra_tidspunkt;
     union {null, long} til_tidspunkt = null;
-    // TODO: Hva med sted? Er det noe vi vil ha med etterhvert?? Fins ikke i Arena.
+    // Sted er ikke med i de konverterte Arena CV'ene.
+    union {null,string} sted = null;
+    string beskrivelse = "";
+    boolean ikke_aktuelt_for_fremtiden = false;
   }
 
   enum UtdannelseYrkestatus {
@@ -45,6 +49,7 @@ protocol CvProtocol {
     string nuskode_grad; // Uvisst hvor mange siffer, sannsynligvis kun det første sifferet i NUS
     string laerested;
     string beskrivelse;
+    string utdanningsretning = "";
     date fra_tidspunkt;
     // til_tidspunkt er ms siden epoch
     union {null, long} til_tidspunkt = null;
@@ -72,6 +77,7 @@ protocol CvProtocol {
   /** Verv etc inngår i annen erfaring */
   record AnnenErfaring {
     string beskrivelse;
+    string rolle = "";
     date fra_tidspunkt;
     union {null, long} til_tidspunkt = null;
   }
