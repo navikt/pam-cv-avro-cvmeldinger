@@ -124,6 +124,7 @@ protocol CvProtocol {
     union {null, string} gateadresse = null;
     union {null, string} postnummer = null;
     union {null, string} poststed = null;
+    union {null, string} kommunenr = null;
     union {null, string} land = null;
     union {null, string} nasjonalitet = null;
     boolean disponerer_bil;
