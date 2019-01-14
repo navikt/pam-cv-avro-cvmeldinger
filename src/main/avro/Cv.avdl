@@ -94,19 +94,19 @@ protocol CvProtocol {
   }
 
   record Oppfolgingsinformasjon {
-    string veileder;
-    boolean manuell;
-    string formidlingsgruppe;
+    string veileder = "";
+    boolean manuell = false;
+    string formidlingsgruppe = "";
     /** F.eks avklaring, beholde arbeid/skaffe arbeid*/
-    string hovedmaal;
+    string hovedmaal = "";
     /** AKA kvalifiseringsgruppe/innsatsgruppe, f.eks spesielt tilpasse innsats */
-    string servicegruppe;
+    string servicegruppe = "";
     /** Aetat-orgenhet */
-    string oppfolgingskontor;
+    string oppfolgingskontor = "";
     /** AKA IMATC */
-    boolean fritattArbeidsgiversKandidatsok;
+    boolean fritattArbeidsgiversKandidatsok = false;
     /** AKA FRKAS */
-    boolean fritattKandidatsok;
+    boolean fritattKandidatsok = false;
   }
 
   record Cv {
