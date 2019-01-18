@@ -77,14 +77,14 @@ protocol CvProtocol {
   record AnnenErfaring {
     string beskrivelse;
     string rolle = "";
-    date fra_tidspunkt;
+    union {null, long} fra_tidspunkt = null;
     union {null, long} til_tidspunkt = null;
   }
 
   record FoererkortKlasse {
     string klasse;
     union {null, string} klasse_beskrivelse = null;
-    date fra_tidspunkt;
+    union {null, long} fra_tidspunkt;
     union {null, long} utloeper = null; // TODO kandidat for å fjernes
   }
   /** Førerkort inneholder kun de førerkortklassene du finner bak på førerkortet ditt,
