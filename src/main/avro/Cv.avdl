@@ -69,6 +69,7 @@ protocol CvProtocol {
   record Sertifikat {
     string tittel;
     string utsteder;
+    union {null, string} sertifikatkodenavn = null;
     date gjennomfoert;
     union {null, long} utloeper = null; // TODO kandidat for å fjernes?
   }
