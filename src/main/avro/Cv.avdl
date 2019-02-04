@@ -127,6 +127,10 @@ protocol CvProtocol {
     union {null, string} kommunenr = null;
     union {null, string} land = null;
     union {null, string} nasjonalitet = null;
+
+    /** Beskriver hva kandidaten har valgt under oppstart i jobbprofil */
+    union {null, string} oppstart_kode = null;
+
     boolean disponerer_bil;
     string sammendrag = "";
 
