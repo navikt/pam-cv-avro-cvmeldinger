@@ -128,7 +128,8 @@ protocol CvProtocol {
     union {null, string} land = null;
     union {null, string} nasjonalitet = null;
 
-    /** Beskriver hva kandidaten har valgt under oppstart i jobbprofil */
+    // Beskriver hva kandidaten har valgt under oppstart i jobbprofil 
+    // TODO: Dette feltet kan fjernes hvis vi i fremtiden skal opprette en ny kø. Bruk jobbprofil istedenfor.
     union {null, string} oppstart_kode = null;
 
     boolean disponerer_bil;
@@ -163,6 +164,9 @@ protocol CvProtocol {
     string aktoer_id;
     timestamp_ms sist_endret;
     timestamp_ms opprettet;
+
+    /** Beskriver hva kandidaten har valgt under oppstart i jobbprofil */
+    union {null, string} oppstart_kode = null;
 
     boolean aktiv;
     array<string> stillinger;
