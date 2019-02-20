@@ -139,26 +139,26 @@ protocol CvDVHProtocol {
     union {null, string} oppstart_kode = null;
   }
 
-  record OpprettCv {
+  record OpprettCvDVH {
     Cv cv;
   }
-  record OpprettJobbprofil {
+  record OpprettJobbprofilDVH {
     Jobbprofil jobbprofil;
   }
-  record EndreCv {
+  record EndreCvDVH {
     Cv cv;
   }
-  record EndreJobbprofil {
+  record EndreJobbprofilDVH {
     Jobbprofil jobbprofil;
   }
-  record SlettCv {
+  record SlettCvDVH {
     string cv_id;
   }
-  record SlettJobbprofil {
+  record SlettJobbprofilDVH {
     string jobbprofil_id;
   }
 
-  enum Meldingstype {
+  enum MeldingstypeDVH {
     OPPRETT,
     ENDRE,
     SLETT
@@ -170,7 +170,7 @@ protocol CvDVHProtocol {
       Det vil alltid være en cv med her, men ikke alltid en jobbprofil.
       Hvis aktøren er under oppfølging vil det alltid følge med oppfølgingsinformasjon
    */
-  record Melding {
+  record MeldingDVH {
     Meldingstype meldingstype;
     union {null, OpprettCv} opprett_cv = null;
     union {null, EndreCv} endre_cv = null;
