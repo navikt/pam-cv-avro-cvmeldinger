@@ -7,7 +7,7 @@
 	<groupId>no.nav.arbeid.pam</groupId>
 	<artifactId>pam-cv-avro-cvmeldinger</artifactId>
 	<packaging>jar</packaging>
-	<version>32-SNAPSHOT</version>
+	<version>32</version>
 
 	<name>pam-cv-avro-cvmeldinger</name>
 	<description>Domenemodell for CV'er slik de utgår fra PAM-CV</description>
