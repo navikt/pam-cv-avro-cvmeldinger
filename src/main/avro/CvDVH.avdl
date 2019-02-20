@@ -1,0 +1,190 @@
+@namespace("no.nav.arbeid.cvdvh.avro")
+protocol CvDVHProtocol {
+  enum Ferdighetsnivaa {
+    /** Ikke oppgitt eller ikke relevant, f.eks er skriftlig tegnspråk ikke meningsfullt */
+    IKKE_OPPGITT,
+    NYBEGYNNER,
+    GODT,
+    VELDIG_GODT,
+    FOERSTESPRAAK
+  }
+
+  enum Tidsenhet {
+    TIME,
+    DAG,
+    UKE,
+    MND
+  }
+
+  record Spraakferdighet {
+    string spraaknavn;
+    union {null, string} iso3kode = null; // Det er ikke sikkert det fins ISO-koder for språket. Det er ikke sikkert språket egentlig eksisterer i hele tatt..
+    Ferdighetsnivaa muntlig;
+    Ferdighetsnivaa skriftlig;
+  }
+
+  record Arbeidserfaring {
+    string stillingstittel;
+    string stillingstittel_fritekst = "";
+    union {null, string} styrkkode = null;
+    union {null, string} janzz_konseptid = null;
+    union {null, string} arbeidsgiver = null;
+    date fra_tidspunkt;
+    union {null, long} til_tidspunkt = null;
+    // Sted er ikke med i de konverterte Arena CV'ene.
+    union {null,string} sted = null;
+  }
+
+  enum UtdannelseYrkestatus {
+    SVENNEBREV_FAGBREV,
+    MESTERBREV,
+    INGEN
+  }
+
+  /** Utdannelse inkluderer også svennebrev */
+  record Utdannelse {
+    string nuskode_grad;
+    string laerested;
+    string utdanningsretning = "";
+    date fra_tidspunkt;
+    // til_tidspunkt er ms siden epoch
+    union {null, long} til_tidspunkt = null;
+    union {null, UtdannelseYrkestatus} utdannelse_yrkestatus = null;
+    boolean autorisasjon = false;
+  }
+
+  /** Kurs er f.eks førstehjelpskurs */
+  record Kurs {
+    string tittel;
+    string utsteder;
+    union {null, long} tidspunkt = null;
+    union {null, int} varighet = null;
+    union {null, Tidsenhet} varighet_enhet = null;
+  }
+
+  /** Sertifikater er f.eks truckførerbevis, sveisesertifikat eller offshoresertifikat */
+  record Sertifikat {
+    string tittel;
+    string utsteder;
+    date gjennomfoert;
+    union {null, long} utloeper = null;
+  }
+
+  /** Verv etc inngår i annen erfaring */
+  record AnnenErfaring {
+    string beskrivelse;
+    string rolle = "";
+    union {null, long} fra_tidspunkt = null;
+    union {null, long} til_tidspunkt = null;
+  }
+
+  record FoererkortKlasse {
+    string klasse;
+    union {null, string} klasse_beskrivelse = null;
+    union {null, long} fra_tidspunkt;
+    union {null, long} utloeper = null;
+  }
+  /** Førerkort inneholder kun de førerkortklassene du finner bak på førerkortet ditt,
+      truckførerbevis etc inngår i Sertifikat */
+  record Foererkort {
+    array<FoererkortKlasse> klasse;
+  }
+
+  record Oppfolgingsinformasjon {
+    boolean manuell = false;
+    boolean under_oppfolging = false;
+  }
+
+  record Cv {
+    string cv_id;
+    string aktoer_id;
+    timestamp_ms sist_endret;
+    timestamp_ms opprettet;
+
+    string fodselsnummer;
+    union {null, Foererkort} foererkort;
+    array<Arbeidserfaring> arbeidserfaring;
+    array<Utdannelse> utdannelse;
+    array<Kurs> kurs;
+    array<Sertifikat> sertifikat;
+    array<AnnenErfaring> annen_erfaring;
+    array<Spraakferdighet> spraakferdigheter;
+  }
+
+  record Geografi {
+    union {null, string} sted = null;
+    union {null, string} kode = null;
+  }
+
+  record Jobbprofil {
+    string jobbprofil_id;
+    string aktoer_id;
+    timestamp_ms sist_endret;
+    timestamp_ms opprettet;
+
+    array<string> stillinger;
+    array<string> kompetanser;
+    array<Geografi> geografi;
+    // Typiske verdier for ansettelsesformer er ENGASJEMENT, FAST, FERIEJOBB, PROSJEKT, SELVSTENDIG_NAERINGSDRIVENDE,
+    // SESONG, VIKARIAT, TRAINEE, LAERLING eller ANNET
+    array<string> ansettelsesformer;
+    // Typiske verdier for arbeidstider er DAGTID, KVELD, NATT
+    array<string> arbeidstider;
+    array<string> arbeidsdager;
+    // Typiske verdier for arbeidstidsordninger er SKIFT, TURNUS, VAKT
+    array<string> arbeidstidsordninger;
+    // Typiske verdier for omfang er HELTID eller DELTID
+    array<string> omfang;
+    // Beskriver hva kandidaten har valgt under oppstart i jobbprofil
+    union {null, string} oppstart_kode = null;
+  }
+
+  record OpprettCvDVH {
+    Cv cv;
+  }
+  record OpprettJobbprofilDVH {
+    Jobbprofil jobbprofil;
+  }
+  record EndreCvDVH {
+    Cv cv;
+  }
+  record EndreJobbprofilDVH {
+    Jobbprofil jobbprofil;
+  }
+  record SlettCvDVH {
+    string cv_id;
+  }
+  record SlettJobbprofilDVH {
+    string jobbprofil_id;
+  }
+
+  enum MeldingstypeDVH {
+    OPPRETT,
+    ENDRE,
+    SLETT
+  }
+
+  /** Kun ett av feltene opprett, endre eller slett vil ha verdi.
+      Dette er basert på meldingstype.
+      Hvis meldingstype f.eks er OPPRETT vil både opprett_jobbprofil og opprett_cv kunne ha verdi
+      Det vil alltid være en cv med her, men ikke alltid en jobbprofil.
+      Hvis aktøren er under oppfølging vil det alltid følge med oppfølgingsinformasjon
+   */
+  record MeldingDVH {
+    Meldingstype meldingstype;
+    union {null, OpprettCv} opprett_cv = null;
+    union {null, EndreCv} endre_cv = null;
+    union {null, SlettCv} slett_cv = null;
+
+    union {null, OpprettJobbprofil} opprett_jobbprofil = null;
+    union {null, EndreJobbprofil} endre_jobbprofil = null;
+    union {null, SlettJobbprofil} slett_jobbprofil = null;
+
+    // Kun de som er under oppfølging har oppfolgingsinformasjon
+    union {null, Oppfolgingsinformasjon} oppfolgingsinformasjon = null;
+
+    string aktoer_id;
+    timestamp_ms sist_endret;
+  }
+}
+
