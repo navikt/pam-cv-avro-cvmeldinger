@@ -53,6 +53,18 @@ protocol CvDVHProtocol {
     boolean autorisasjon = false;
   }
 
+  enum FagdokumentasjonType {
+    SVENNEBREV_FAGBREV,
+    MESTERBREV,
+    AUTORISASJON
+  }
+
+  /** Fagdokumentasjon er fagbrev/svennebrev, mesterbrev og autorisasjon */
+  record Fagdokumentasjon {
+    FagdokumentasjonType type;
+    union {null, string} tittel = null;
+  }
+
   /** Kurs er f.eks førstehjelpskurs */
   record Kurs {
     string tittel;
@@ -108,6 +120,7 @@ protocol CvDVHProtocol {
     union {null, Foererkort} foererkort;
     array<Arbeidserfaring> arbeidserfaring;
     array<Utdannelse> utdannelse;
+    array<Fagdokumentasjon> fagdokumentasjon = null;
     array<Kurs> kurs;
     array<Sertifikat> sertifikat;
     array<AnnenErfaring> annen_erfaring;
