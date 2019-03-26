@@ -163,7 +163,7 @@ protocol CvProtocol {
 
     array<Arbeidserfaring> arbeidserfaring;
     array<Utdannelse> utdannelse;
-    array<Fagdokumentasjon> fagdokumentasjon;
+    array<Fagdokumentasjon> fagdokumentasjon = null;
     array<Kurs> kurs;
     array<Sertifikat> sertifikat;
     array<AnnenErfaring> annen_erfaring;
