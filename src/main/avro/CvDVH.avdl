@@ -63,6 +63,7 @@ protocol CvDVHProtocol {
   record Fagdokumentasjon {
     FagdokumentasjonType type;
     union {null, string} tittel = null;
+    union {null, string} beskrivelse = null;
   }
 
   /** Kurs er f.eks førstehjelpskurs */
