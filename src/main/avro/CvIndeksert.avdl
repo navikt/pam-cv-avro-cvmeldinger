@@ -1,0 +1,11 @@
+@namespace("no.nav.arbeid.cv.avstemming.avro")
+protocol CvIndeksertProtocol {
+
+  record Indekseringsmelding {
+    string aktoer_id;
+    timestamp_ms cv_sist_endret;
+    timestamp_ms jp_sist_endret;
+    boolean erSlettemelding;
+  }
+}
+

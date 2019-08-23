@@ -15,6 +15,9 @@
 	<properties>
 		<avro.version>1.8.1</avro.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+                <java.version>8</java.version>
+		<maven.compiler.source>8</maven.compiler.source>
+		<maven.compiler.target>8</maven.compiler.target>
 	</properties>
 
 	<dependencies>
@@ -78,6 +81,25 @@
 							</arguments>
 						</configuration>
 					</execution>
+					<execution>
+						<id>3</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>java</executable>
+							<mainClass>org.apache.avro.tool.Main</mainClass>
+							<arguments>
+								<argument>-classpath</argument>
+								<classpath/>
+								<argument>org.apache.avro.tool.Main</argument>
+								<argument>idl2schemata</argument>
+								<argument>${basedir}/src/main/avro/CvIndeksert.avdl</argument>
+								<argument>${project.build.directory}/generated-sources/avroidx</argument>
+							</arguments>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>
@@ -109,8 +131,21 @@
 							<stringType>String</stringType>
 						</configuration>
 					</execution>
+					<execution>
+						<id>3</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>schema</goal>
+						</goals>
+						<configuration>
+							<sourceDirectory>${project.build.directory}/generated-sources/avroidx/</sourceDirectory>
+							<outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
+							<stringType>String</stringType>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
+
 		</plugins>
 	</build>
 
