@@ -123,7 +123,7 @@ protocol CvProtocol {
     boolean fritattArbeidsgiversKandidatsok = false;
     /** AKA FRKAS */
     boolean fritattKandidatsok = false;
-    boolean inkluderingsbehov = false;
+    boolean tilretteleggingsbehov = false;
   }
 
   record Cv {
