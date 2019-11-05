@@ -156,12 +156,6 @@ protocol CvDVHProtocol {
     union {null, string} oppstart_kode = null;
   }
 
-  record OpprettCvDVH {
-    Cv cv;
-  }
-  record OpprettJobbprofilDVH {
-    Jobbprofil jobbprofil;
-  }
   record EndreCvDVH {
     Cv cv;
   }
@@ -176,24 +170,21 @@ protocol CvDVHProtocol {
   }
 
   enum MeldingstypeDVH {
-    OPPRETT,
     ENDRE,
     SLETT
   }
 
-  /** Kun ett av feltene opprett, endre eller slett vil ha verdi.
+  /** Kun ett av feltene endre eller slett vil ha verdi.
       Dette er basert på meldingstype.
-      Hvis meldingstype f.eks er OPPRETT vil både opprett_jobbprofil og opprett_cv kunne ha verdi
+      Hvis meldingstype f.eks er ENDRE vil både endre_jobbprofil og endre_cv kunne ha verdi
       Det vil alltid være en cv med her, men ikke alltid en jobbprofil.
       Hvis aktøren er under oppfølging vil det alltid følge med oppfølgingsinformasjon
    */
   record MeldingDVH {
     MeldingstypeDVH meldingstype;
-    union {null, OpprettCvDVH} opprett_cv = null;
     union {null, EndreCvDVH} endre_cv = null;
     union {null, SlettCvDVH} slett_cv = null;
 
-    union {null, OpprettJobbprofilDVH} opprett_jobbprofil = null;
     union {null, EndreJobbprofilDVH} endre_jobbprofil = null;
     union {null, SlettJobbprofilDVH} slett_jobbprofil = null;
 
