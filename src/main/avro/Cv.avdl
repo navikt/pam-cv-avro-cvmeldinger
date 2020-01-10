@@ -124,6 +124,7 @@ protocol CvProtocol {
     /** AKA FRKAS */
     boolean fritattKandidatsok = false;
     boolean tilretteleggingsbehov = false;
+    array<string> tilretteleggingsbehovkoder = null;
   }
 
   record Cv {
