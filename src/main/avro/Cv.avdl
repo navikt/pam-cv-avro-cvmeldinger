@@ -124,6 +124,7 @@ protocol CvProtocol {
     /** AKA FRKAS */
     boolean fritattKandidatsok = false;
     boolean tilretteleggingsbehov = false;
+    array<string> veilTilretteleggingsbehov = null;
   }
 
   record Cv {
@@ -145,7 +146,7 @@ protocol CvProtocol {
     union {null, string} land = null;
     union {null, string} nasjonalitet = null;
 
-    // Beskriver hva kandidaten har valgt under oppstart i jobbprofil 
+    // Beskriver hva kandidaten har valgt under oppstart i jobbprofil
     // TODO: Dette feltet kan fjernes hvis vi i fremtiden skal opprette en ny kø. Bruk jobbprofil istedenfor.
     union {null, string} oppstart_kode = null;
 
