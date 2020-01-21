@@ -176,20 +176,9 @@
 
 	<distributionManagement>
 		<repository>
-			<id>m2internal</id>
-			<name>NAV Maven2 Internal Repository</name>
-			<url>https://repo.adeo.no/repository/maven-releases/</url>
-		</repository>
-		<repository>
 			<id>github</id>
 			<url>https://maven.pkg.github.com/navikt/pam-cv-avro-cvmeldinger</url>
 		</repository>
-		<snapshotRepository>
-			<id>m2snapshot</id>
-			<name>NAV Maven2 Snapshot Repository</name>
-			<url>https://repo.adeo.no/repository/maven-snapshots/</url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
 	</distributionManagement>
 	<scm>
 		<developerConnection>scm:git:git@github.com:navikt/pam-cv-avro-cvmeldinger.git</developerConnection>
