@@ -5,7 +5,7 @@ mvn -B help:evaluate -Dexpression=project.version | tee project_version
 
 if [ $? -gt 0 ]
  then
-   echo "something fishy happened"
+   echo "something fishy happened."
    exit 1;
 fi
 
