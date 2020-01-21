@@ -12,6 +12,21 @@
 	<name>pam-cv-avro-cvmeldinger</name>
 	<description>Domenemodell for CV'er slik de utgår fra PAM-CV</description>
 
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://opensource.org/licenses/MIT</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<organization>NAV (Arbeids- og velferdsdirektoratet) - The Norwegian Labour and Welfare Administration</organization>
+			<organizationUrl>https://www.nav.no</organizationUrl>
+		</developer>
+	</developers>
+
+
 	<properties>
 		<avro.version>1.8.1</avro.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -145,7 +160,17 @@
 					</execution>
 				</executions>
 			</plugin>
-
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>include-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -155,6 +180,10 @@
 			<name>NAV Maven2 Internal Repository</name>
 			<url>https://repo.adeo.no/repository/maven-releases/</url>
 		</repository>
+		<repository>
+			<id>github</id>
+			<url>https://maven.pkg.github.com/navikt/pam-cv-avro-cvmeldinger</url>
+		</repository>
 		<snapshotRepository>
 			<id>m2snapshot</id>
 			<name>NAV Maven2 Snapshot Repository</name>
@@ -162,5 +191,11 @@
 			<uniqueVersion>false</uniqueVersion>
 		</snapshotRepository>
 	</distributionManagement>
+	<scm>
+		<developerConnection>scm:git:git@github.com:navikt/pam-cv-avro-cvmeldinger.git</developerConnection>
+		<connection>scm:git:git@github.com:navikt/pam-cv-avro-cvmeldinger.git</connection>
+		<url>https://github.com/navikt/pam-cv-avro-cvmeldinger</url>
+		<tag>HEAD</tag>
+	</scm>
 
 </project>
