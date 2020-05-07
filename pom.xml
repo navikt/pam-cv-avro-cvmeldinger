@@ -28,7 +28,7 @@
 
 
 	<properties>
-		<avro.version>1.8.1</avro.version>
+		<avro.version>1.9.2</avro.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
                 <java.version>8</java.version>
 		<maven.compiler.source>8</maven.compiler.source>
@@ -54,106 +54,18 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.6.0</version>
-				<executions>
-					<execution>
-						<id>1</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>java</executable>
-							<mainClass>org.apache.avro.tool.Main</mainClass>
-							<arguments>
-								<argument>-classpath</argument>
-								<classpath/>
-								<argument>org.apache.avro.tool.Main</argument>
-								<argument>idl2schemata</argument>
-								<argument>${basedir}/src/main/avro/Cv.avdl</argument>
-								<argument>${project.build.directory}/generated-sources/avro</argument>
-							</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>2</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>java</executable>
-							<mainClass>org.apache.avro.tool.Main</mainClass>
-							<arguments>
-								<argument>-classpath</argument>
-								<classpath/>
-								<argument>org.apache.avro.tool.Main</argument>
-								<argument>idl2schemata</argument>
-								<argument>${basedir}/src/main/avro/CvDVH.avdl</argument>
-								<argument>${project.build.directory}/generated-sources/avrodvh</argument>
-							</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>3</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>java</executable>
-							<mainClass>org.apache.avro.tool.Main</mainClass>
-							<arguments>
-								<argument>-classpath</argument>
-								<classpath/>
-								<argument>org.apache.avro.tool.Main</argument>
-								<argument>idl2schemata</argument>
-								<argument>${basedir}/src/main/avro/CvIndeksert.avdl</argument>
-								<argument>${project.build.directory}/generated-sources/avroidx</argument>
-							</arguments>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.avro</groupId>
 				<artifactId>avro-maven-plugin</artifactId>
 				<version>${avro.version}</version>
 				<executions>
 					<execution>
 						<id>1</id>
-						<phase>process-sources</phase>
+						<phase>generate-resources</phase>
 						<goals>
-							<goal>schema</goal>
+							<goal>idl-protocol</goal>
 						</goals>
 						<configuration>
-							<sourceDirectory>${project.build.directory}/generated-sources/avro/</sourceDirectory>
-							<outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
-							<stringType>String</stringType>
-						</configuration>
-					</execution>
-					<execution>
-						<id>2</id>
-						<phase>process-sources</phase>
-						<goals>
-							<goal>schema</goal>
-						</goals>
-						<configuration>
-							<sourceDirectory>${project.build.directory}/generated-sources/avrodvh/</sourceDirectory>
-							<outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
-							<stringType>String</stringType>
-						</configuration>
-					</execution>
-					<execution>
-						<id>3</id>
-						<phase>process-sources</phase>
-						<goals>
-							<goal>schema</goal>
-						</goals>
-						<configuration>
-							<sourceDirectory>${project.build.directory}/generated-sources/avroidx/</sourceDirectory>
+							<sourceDirectory>src/main/avro/</sourceDirectory>
 							<outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
 							<stringType>String</stringType>
 						</configuration>

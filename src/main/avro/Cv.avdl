@@ -124,7 +124,7 @@ protocol CvProtocol {
     /** AKA FRKAS */
     boolean fritattKandidatsok = false;
     boolean tilretteleggingsbehov = false;
-    array<string> veilTilretteleggingsbehov = null;
+    union {null, array<string>} veilTilretteleggingsbehov = null;
   }
 
   record Cv {
@@ -166,7 +166,7 @@ protocol CvProtocol {
 
     array<Arbeidserfaring> arbeidserfaring;
     array<Utdannelse> utdannelse;
-    array<Fagdokumentasjon> fagdokumentasjon = null;
+    union { null, array<Fagdokumentasjon> } fagdokumentasjon = null;
     array<Kurs> kurs;
     array<Sertifikat> sertifikat;
     array<AnnenErfaring> annen_erfaring;
