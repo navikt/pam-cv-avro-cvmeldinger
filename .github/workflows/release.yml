@@ -11,6 +11,16 @@ on:
       - "CODEOWNERS"
 
 jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: snyk/actions/maven@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor
+          args: --org=teampam
   release:
     runs-on: ubuntu-latest
     steps:

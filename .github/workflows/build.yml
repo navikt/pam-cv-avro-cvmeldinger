@@ -3,9 +3,19 @@ name: CI
 on:
   push:
     branches:
+      - '*'
       - '!master'
 
 jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: snyk/actions/maven@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --org=teampam
   build:
     runs-on: ubuntu-latest
     steps:
