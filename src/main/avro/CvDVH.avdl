@@ -86,6 +86,15 @@ protocol CvDVHProtocol {
     union {null, long} utloeper = null;
   }
 
+  /** Gokjenninger tidligere Autorisasjoner */
+  record Godkjenning {
+    string tittel;
+    string konsept_id;
+    string utsteder;
+    date gjennomfoert;
+    union {null, long} utloeper = null; // TODO kandidat for å fjernes?
+  }
+
   /** Verv etc inngår i annen erfaring */
   record AnnenErfaring {
     string beskrivelse;
@@ -122,6 +131,7 @@ protocol CvDVHProtocol {
     array<Arbeidserfaring> arbeidserfaring;
     array<Utdannelse> utdannelse;
     union {null,  array<Fagdokumentasjon>} fagdokumentasjon = null;
+    union {null, array<Godkjenning>} godkjenninger = null;
     array<Kurs> kurs;
     array<Sertifikat> sertifikat;
     array<AnnenErfaring> annen_erfaring;
