@@ -88,9 +88,9 @@ protocol CvDVHProtocol {
 
   /** Gokjenninger tidligere Autorisasjoner */
   record Godkjenning {
-    string tittel;
-    string konsept_id;
-    string utsteder;
+    union {null, string} tittel = null;
+    union {null, string} konsept_id = null;
+    union {null, string} utsteder = null;
     union {null, date} gjennomfoert = null;
     union {null, long} utloeper = null;
   }
