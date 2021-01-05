@@ -29,7 +29,7 @@ protocol CvDVHProtocol {
     union {null, string} styrkkode = null;
     union {null, string} janzz_konseptid = null;
     union {null, string} arbeidsgiver = null;
-    date fra_tidspunkt;
+    union {null, date} fra_tidspunkt = null;
     union {null, long} til_tidspunkt = null;
     // Sted er ikke med i de konverterte Arena CV'ene.
     union {null,string} sted = null;
@@ -46,7 +46,7 @@ protocol CvDVHProtocol {
     string nuskode_grad;
     string laerested;
     string utdanningsretning = "";
-    date fra_tidspunkt;
+    union {null, date} fra_tidspunkt = null;
     // til_tidspunkt er ms siden epoch
     union {null, long} til_tidspunkt = null;
     union {null, UtdannelseYrkestatus} utdannelse_yrkestatus = null;
