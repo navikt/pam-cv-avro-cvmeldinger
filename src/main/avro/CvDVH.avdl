@@ -82,7 +82,7 @@ protocol CvDVHProtocol {
     union {null, string} sertifikatnavn_fritekst = null;
     union {null, string} konsept_id = null;
     string utsteder;
-    date gjennomfoert;
+    union {null, date} gjennomfoert = null;
     union {null, long} utloeper = null;
   }
 
@@ -91,8 +91,8 @@ protocol CvDVHProtocol {
     string tittel;
     string konsept_id;
     string utsteder;
-    date gjennomfoert;
-    union {null, long} utloeper = null; // TODO kandidat for å fjernes?
+    union {null, date} gjennomfoert = null;
+    union {null, long} utloeper = null;
   }
 
   /** Verv etc inngår i annen erfaring */
