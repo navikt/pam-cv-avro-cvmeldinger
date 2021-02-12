@@ -50,6 +50,7 @@ protocol CvDVHProtocol {
     // til_tidspunkt er ms siden epoch
     union {null, long} til_tidspunkt = null;
     union {null, UtdannelseYrkestatus} utdannelse_yrkestatus = null;
+    union {null, string} beskrivelse = null;
     boolean autorisasjon = false;
   }
 
