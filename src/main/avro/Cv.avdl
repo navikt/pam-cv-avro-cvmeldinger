@@ -240,6 +240,12 @@ protocol CvProtocol {
     SLETT
   }
 
+  enum EndretAv {
+    VEILEDER,
+    SYSTEMBRUKER,
+    PERSONBRUKER
+  }
+
   // TODO Samtykke/Hjemmel?
   // Inntill videre er samtykke/hjemmel innbakt i cv.synlig_for_arbeidsgiver og cv.synlig_for_veileder.
 
@@ -251,6 +257,9 @@ protocol CvProtocol {
    */
   record Melding {
     Meldingstype meldingstype;
+
+    union {null, EndretAv} endret_av = null;
+
     union {null, OpprettCv} opprett_cv = null;
     union {null, EndreCv} endre_cv = null;
     union {null, SlettCv} slett_cv = null;
