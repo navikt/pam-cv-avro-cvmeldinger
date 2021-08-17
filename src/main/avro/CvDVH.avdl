@@ -185,6 +185,12 @@ protocol CvDVHProtocol {
     SLETT
   }
 
+  enum EndretAv {
+    VEILEDER,
+    SYSTEMBRUKER,
+    PERSONBRUKER
+  }
+
   /** Kun ett av feltene endre eller slett vil ha verdi.
       Dette er basert på meldingstype.
       Hvis meldingstype f.eks er ENDRE vil både endre_jobbprofil og endre_cv kunne ha verdi
@@ -193,6 +199,9 @@ protocol CvDVHProtocol {
    */
   record MeldingDVH {
     MeldingstypeDVH meldingstype;
+
+    union {null, EndretAv} endret_av = null;
+
     union {null, EndreCvDVH} endre_cv = null;
     union {null, SlettCvDVH} slett_cv = null;
 
